@@ -1,288 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cloud Computing Flashcards</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Computing Flashcards – Unit I & II</title>
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
 
-.container {
-    max-width: 720px;
-    width: 100%;
-    padding: 20px;
-    text-align: center;
-}
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+        }
 
-.hidden {
-    display: none;
-}
+        .header h1 {
+            font-size: 2.3em;
+            margin-bottom: 8px;
+        }
 
-/* ---------- BUTTONS ---------- */
-button {
-    padding: 12px 28px;
-    margin: 8px;
-    font-size: 1em;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-}
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
 
-.unit-buttons button {
-    background: white;
-    color: #667eea;
-}
+        .container {
+            max-width: 650px;
+            width: 100%;
+        }
 
-.controls button {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-}
+        .progress {
+            text-align: center;
+            color: white;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
 
-/* ---------- FLASHCARD ---------- */
-.card-wrapper {
-    perspective: 1200px;
-    margin: 25px 0;
-}
+        .card-wrapper {
+            perspective: 1000px;
+            margin-bottom: 25px;
+        }
 
-.flashcard {
-    width: 100%;
-    height: 380px;
-    background: transparent;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.6s ease;
-    cursor: pointer;
-}
+        .flashcard {
+            width: 100%;
+            height: 360px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
 
-.flashcard.flipped {
-    transform: rotateY(180deg);
-}
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
 
-.card-face {
-    position: absolute;
-    inset: 0;
-    background: white;
-    color: #333;
-    border-radius: 15px;
-    padding: 28px 30px;
-    backface-visibility: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-    /* 🔑 REAL FIX */
-    display: block;
-    text-align: left;
-    overflow-y: auto;
-}
+        .card-front {
+            background: white;
+        }
 
-.card-back {
-    transform: rotateY(180deg);
-}
+        .card-back {
+            background: #f8f9fa;
+            transform: rotateY(180deg);
+        }
 
-/* ---------- CONTENT ---------- */
-.label {
-    display: inline-block;
-    background: #667eea;
-    color: white;
-    padding: 5px 14px;
-    border-radius: 18px;
-    font-size: 0.8em;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
+        .card-face h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-.card-face h3 {
-    color: #667eea;
-    margin-bottom: 15px;
-    line-height: 1.4;
-}
+        .card-face ul {
+            text-align: left;
+            color: #333;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
 
-.card-face p {
-    font-size: 0.9em;
-    opacity: 0.7;
-    margin-top: 10px;
-}
+        .card-label {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: #667eea;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 18px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
 
-ul {
-    padding-left: 20px;
-    margin-top: 10px;
-}
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
 
-li {
-    margin-bottom: 10px;
-    line-height: 1.5;
-}
+        button {
+            padding: 10px 26px;
+            font-size: 1em;
+            border-radius: 22px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-/* ---------- TEXT ---------- */
-h1, h2 {
-    margin-bottom: 10px;
-}
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
 
-.info {
-    opacity: 0.9;
-    margin-bottom: 15px;
-}
-</style>
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
-
-<!-- UNIT SELECTION -->
-<div id="unit-select">
-    <h1>☁️ Cloud Computing</h1>
-    <p class="info">Select Unit to Start Flashcards</p>
-
-    <div class="unit-buttons">
-        <button onclick="startUnit('unit1')">Unit I – Fundamentals</button>
-        <button onclick="startUnit('unit2')">Unit II – Virtualization</button>
-    </div>
+<div class="header">
+    <h1>☁️ Cloud Computing Flashcards</h1>
+    <p>Unit I & Unit II – Storage as a Platform Demo</p>
 </div>
 
-<!-- FLASHCARDS -->
-<div id="flashcard-section" class="hidden">
+<div class="container">
 
-    <h2 id="unit-title"></h2>
-    <p class="info">Card <span id="current">1</span> / <span id="total">1</span></p>
+    <div class="progress">
+        Card <span id="current-card">1</span> of <span id="total-cards">1</span>
+    </div>
 
     <div class="card-wrapper">
         <div class="flashcard" id="flashcard" onclick="flipCard()">
 
-            <!-- FRONT -->
-            <div class="card-face">
-                <span class="label">QUESTION</span>
-                <h3 id="question"></h3>
-                <p>Click card to see answer</p>
+            <div class="card-face card-front">
+                <span class="card-label" id="unit-label">UNIT I</span>
+                <h2 id="question-text"></h2>
+                <p style="opacity:0.6;margin-top:15px;">Click card to view answer</p>
             </div>
 
-            <!-- BACK -->
             <div class="card-face card-back">
-                <span class="label">ANSWER</span>
-                <ul id="answer"></ul>
+                <span class="card-label">ANSWER</span>
+                <ul id="answer-text"></ul>
             </div>
 
         </div>
     </div>
 
     <div class="controls">
-        <button onclick="prevCard()">← Previous</button>
-        <button onclick="nextCard()">Next →</button>
-        <button onclick="goBack()">Back to Units</button>
+        <button class="btn-secondary" onclick="previousCard()">← Previous</button>
+        <button class="btn-primary" onclick="nextCard()">Next →</button>
+    </div>
+
+    <div class="info-box">
+        This static flashcard website demonstrates <strong>Storage as a Platform</strong>
+        by hosting HTML, CSS and client-side logic on cloud storage without any server.
     </div>
 
 </div>
 
-</div>
-
 <script>
-const unit1 = [
-{ q:"What is Cloud Computing?", a:[
-"Provides computing resources over the internet",
-"On-demand service model",
-"No physical infrastructure required",
-"Includes storage, servers, networking"
-]},
-{ q:"Goals and benefits of Cloud Computing?", a:[
-"Cost reduction",
-"Scalability",
-"High availability",
-"Flexibility"
-]},
-{ q:"Characteristics of Cloud Computing?", a:[
-"On-demand self service",
-"Broad network access",
-"Resource pooling",
-"Measured service"
-]},
-{ q:"Cloud Delivery Models?", a:[
-"IaaS",
-"PaaS",
-"SaaS"
-]},
-{ q:"Cloud Deployment Models?", a:[
-"Public Cloud",
-"Private Cloud",
-"Hybrid Cloud",
-"Community Cloud"
-]}
+const flashcards = [
+
+/* ---------- UNIT I ---------- */
+{
+    unit: "UNIT I",
+    question: "What is Cloud Computing?",
+    answer: [
+        "Provides computing resources over the internet",
+        "On-demand service model",
+        "Includes storage, servers, networking",
+        "No physical infrastructure for users"
+    ]
+},
+{
+    unit: "UNIT I",
+    question: "List goals and benefits of Cloud Computing.",
+    answer: [
+        "Cost reduction",
+        "Scalability",
+        "High availability",
+        "Flexibility",
+        "Global access"
+    ]
+},
+{
+    unit: "UNIT I",
+    question: "What are the characteristics of Cloud Computing?",
+    answer: [
+        "On-demand self-service",
+        "Broad network access",
+        "Resource pooling",
+        "Rapid elasticity",
+        "Measured service"
+    ]
+},
+{
+    unit: "UNIT I",
+    question: "Explain Cloud Delivery Models.",
+    answer: [
+        "IaaS – Infrastructure as a Service",
+        "PaaS – Platform as a Service",
+        "SaaS – Software as a Service"
+    ]
+},
+{
+    unit: "UNIT I",
+    question: "Explain Cloud Deployment Models.",
+    answer: [
+        "Public Cloud",
+        "Private Cloud",
+        "Hybrid Cloud",
+        "Community Cloud"
+    ]
+},
+
+/* ---------- UNIT II ---------- */
+{
+    unit: "UNIT II",
+    question: "What is Virtualization?",
+    answer: [
+        "Creates virtual versions of resources",
+        "Abstracts physical hardware",
+        "Multiple OS on one machine",
+        "Improves resource utilization"
+    ]
+},
+{
+    unit: "UNIT II",
+    question: "Types of Virtualization.",
+    answer: [
+        "Server virtualization",
+        "Storage virtualization",
+        "Network virtualization",
+        "Desktop virtualization",
+        "Application virtualization"
+    ]
+},
+{
+    unit: "UNIT II",
+    question: "What is a Hypervisor?",
+    answer: [
+        "Manages virtual machines",
+        "Allocates hardware resources",
+        "Enables virtualization",
+        "Also called VMM"
+    ]
+},
+{
+    unit: "UNIT II",
+    question: "Types of Hypervisors.",
+    answer: [
+        "Type 1 – Bare-metal",
+        "Type 2 – Hosted"
+    ]
+},
+{
+    unit: "UNIT II",
+    question: "List pitfalls of Virtualization.",
+    answer: [
+        "Performance overhead",
+        "Security risks",
+        "Complex management",
+        "Licensing issues"
+    ]
+}
 ];
 
-const unit2 = [
-{ q:"What is Virtualization?", a:[
-"Creates virtual versions of resources",
-"Abstracts physical hardware",
-"Multiple OS on one system",
-"Improves resource utilization"
-]},
-{ q:"Types of Virtualization?", a:[
-"Server virtualization",
-"Storage virtualization",
-"Network virtualization",
-"Application virtualization",
-"Desktop virtualization"
-]},
-{ q:"What is a Hypervisor?", a:[
-"Creates and manages virtual machines",
-"Allocates hardware resources",
-"Also called Virtual Machine Monitor"
-]},
-{ q:"Types of Hypervisors?", a:[
-"Type 1 – Bare metal",
-"Type 2 – Hosted"
-]},
-{ q:"Pitfalls of Virtualization?", a:[
-"Performance overhead",
-"Security risks",
-"Complex management",
-"Licensing issues"
-]}
-];
-
-let cards = [];
-let index = 0;
+let currentIndex = 0;
 let flipped = false;
 
-function startUnit(unit) {
-    cards = unit === "unit1" ? unit1 : unit2;
-    document.getElementById("unit-title").textContent =
-        unit === "unit1"
-        ? "Unit I – Fundamentals of Cloud Computing"
-        : "Unit II – Virtualization in Cloud Computing";
-
-    document.getElementById("unit-select").classList.add("hidden");
-    document.getElementById("flashcard-section").classList.remove("hidden");
-    index = 0;
-    updateCard();
-}
-
 function updateCard() {
-    document.getElementById("question").textContent = cards[index].q;
-    document.getElementById("current").textContent = index + 1;
-    document.getElementById("total").textContent = cards.length;
+    const card = flashcards[currentIndex];
+    document.getElementById("question-text").textContent = card.question;
+    document.getElementById("unit-label").textContent = card.unit;
+    document.getElementById("current-card").textContent = currentIndex + 1;
+    document.getElementById("total-cards").textContent = flashcards.length;
 
-    const ans = document.getElementById("answer");
-    ans.innerHTML = "";
-    cards[index].a.forEach(point => {
+    const answerList = document.getElementById("answer-text");
+    answerList.innerHTML = "";
+    card.answer.forEach(point => {
         const li = document.createElement("li");
         li.textContent = point;
-        ans.appendChild(li);
+        answerList.appendChild(li);
     });
 
     if (flipped) flipCard();
@@ -294,21 +330,19 @@ function flipCard() {
 }
 
 function nextCard() {
-    index = (index + 1) % cards.length;
+    currentIndex = (currentIndex + 1) % flashcards.length;
     updateCard();
 }
 
-function prevCard() {
-    index = (index - 1 + cards.length) % cards.length;
+function previousCard() {
+    currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
     updateCard();
 }
 
-function goBack() {
-    document.getElementById("flashcard-section").classList.add("hidden");
-    document.getElementById("unit-select").classList.remove("hidden");
-}
+updateCard();
 </script>
 
 </body>
 </html>
+
 
