@@ -20,19 +20,19 @@ body{
 
 .container{
     width:100%;
-    max-width:650px;
+    max-width:700px;
     padding:20px;
     text-align:center;
 }
 
 .hidden{display:none}
 
-h1{margin-bottom:10px}
-p{opacity:.9;margin-bottom:25px}
+h1,h2{margin-bottom:10px}
+p{opacity:.9;margin-bottom:15px}
 
 .unit-buttons button,
 .controls button{
-    padding:12px 28px;
+    padding:12px 30px;
     margin:10px;
     font-size:1em;
     border-radius:25px;
@@ -60,13 +60,14 @@ p{opacity:.9;margin-bottom:25px}
 .flashcard{
     background:white;
     color:#333;
-    height:340px;
+    height:360px;
     border-radius:15px;
-    padding:30px;
+    padding:25px 30px;
     cursor:pointer;
     transform-style:preserve-3d;
     transition:transform .6s;
     position:relative;
+    text-align:left;
 }
 
 .flashcard.flipped{transform:rotateY(180deg)}
@@ -76,9 +77,10 @@ p{opacity:.9;margin-bottom:25px}
     width:100%;
     height:100%;
     backface-visibility:hidden;
+    padding:30px;
     display:flex;
     flex-direction:column;
-    justify-content:center;
+    justify-content:flex-start;
 }
 
 .card-back{
@@ -97,8 +99,28 @@ p{opacity:.9;margin-bottom:25px}
     font-weight:bold;
 }
 
-ul{text-align:left;margin-top:15px}
-li{margin-bottom:8px}
+.card-face h3{
+    margin-top:25px;
+    margin-bottom:15px;
+    color:#667eea;
+}
+
+.card-face p{
+    font-size:.9em;
+    opacity:.7;
+    margin-top:5px;
+}
+
+ul{
+    margin-top:15px;
+    padding-left:20px;
+}
+
+li{
+    margin-bottom:10px;
+    line-height:1.5;
+}
+
 </style>
 </head>
 
@@ -129,7 +151,7 @@ li{margin-bottom:8px}
             <div class="card-face">
                 <span class="label">QUESTION</span>
                 <h3 id="question"></h3>
-                <p style="opacity:.6;margin-top:15px">Click to see answer</p>
+                <p>Click card to see answer</p>
             </div>
 
             <div class="card-face card-back">
@@ -151,7 +173,7 @@ li{margin-bottom:8px}
 </div>
 
 <script>
-const unit1 = [
+const unit1=[
 {q:"What is Cloud Computing?",a:[
 "Provides resources over internet",
 "On-demand service model",
@@ -183,7 +205,7 @@ const unit1 = [
 ]}
 ];
 
-const unit2 = [
+const unit2=[
 {q:"What is Virtualization?",a:[
 "Creates virtual resources",
 "Abstracts hardware",
@@ -219,8 +241,10 @@ let cards=[],index=0,flipped=false;
 function startUnit(unit){
     cards = unit==="unit1"?unit1:unit2;
     document.getElementById("unit-title").textContent =
-        unit==="unit1"?"Unit I – Fundamentals of Cloud Computing":
-                        "Unit II – Virtualization in Cloud Computing";
+        unit==="unit1"
+        ? "Unit I – Fundamentals of Cloud Computing"
+        : "Unit II – Virtualization in Cloud Computing";
+
     document.getElementById("unit-select").classList.add("hidden");
     document.getElementById("flashcard-section").classList.remove("hidden");
     index=0;
@@ -231,6 +255,7 @@ function updateCard(){
     document.getElementById("question").textContent=cards[index].q;
     document.getElementById("current").textContent=index+1;
     document.getElementById("total").textContent=cards.length;
+
     const ans=document.getElementById("answer");
     ans.innerHTML="";
     cards[index].a.forEach(p=>{
@@ -238,6 +263,7 @@ function updateCard(){
         li.textContent=p;
         ans.appendChild(li);
     });
+
     if(flipped)flipCard();
 }
 
@@ -255,6 +281,3 @@ function goBack(){
 
 </body>
 </html>
-
-
-
