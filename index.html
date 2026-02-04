@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Computing Flashcards - Storage as a Platform Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .card-wrapper {
+            perspective: 1000px;
+            margin-bottom: 30px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 350px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .card-front {
+            background: white;
+        }
+
+        .card-back {
+            background: #f8f9fa;
+            transform: rotateY(180deg);
+        }
+
+        .card-face h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-align: center;
+        }
+
+        .card-face p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            text-align: center;
+            color: #333;
+        }
+
+        .card-label {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .progress {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .info-box h3 {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .flashcard {
+                height: 300px;
+            }
+            
+            .card-face h2 {
+                font-size: 1.4em;
+            }
+            
+            .card-face p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>☁️ Cloud Computing Flashcards</h1>
+        <p>Storage as a Platform (STaaS) Demonstration</p>
+    </div>
+
+    <div class="container">
+        <div class="progress">
+            <span id="current-card">1</span> / <span id="total-cards">10</span>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="flashcard" id="flashcard" onclick="flipCard()">
+                <div class="card-face card-front">
+                    <span class="card-label">Question</span>
+                    <h2 id="question-text">Click to start!</h2>
+                    <p style="font-size: 0.9em; margin-top: 20px; opacity: 0.7;">Click card to flip</p>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-label">Answer</span>
+                    <p id="answer-text">Let's learn Cloud Computing!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn-secondary" onclick="previousCard()">← Previous</button>
+            <button class="btn-primary" onclick="nextCard()">Next →</button>
+        </div>
+
+        <div class="info-box">
+            <h3>📚 About This Demo</h3>
+            <p>This flashcard app is hosted on <strong>Google Cloud Storage</strong>, demonstrating Storage as a Platform. The entire website is served directly from cloud storage buckets, showcasing how static websites can be deployed without traditional web servers!</p>
+        </div>
+    </div>
+
+    <script>
+        const flashcards = [
+            {
+                question: "What is Cloud Computing?",
+                answer: "Cloud computing is the delivery of computing services including servers, storage, databases, networking, software, analytics, and intelligence over the Internet (the cloud) to offer faster innovation, flexible resources, and economies of scale."
+            },
+            {
+                question: "What is Storage as a Platform (STaaS)?",
+                answer: "Storage as a Platform is a cloud service model where storage infrastructure is provided as a service. Users can store, retrieve, and manage data without maintaining physical storage hardware. Examples include Google Cloud Storage, Amazon S3, and Azure Blob Storage."
+            },
+            {
+                question: "What are the main types of cloud storage?",
+                answer: "The three main types are: 1) Object Storage (for unstructured data like images, videos), 2) Block Storage (for structured data like databases), and 3) File Storage (traditional file systems in the cloud)."
+            },
+            {
+                question: "What is Google Cloud Storage?",
+                answer: "Google Cloud Storage is a RESTful online file storage web service for storing and accessing data on Google Cloud Platform infrastructure. It offers object storage with global edge-caching for high-performance content delivery."
+            },
+            {
+                question: "What are the storage classes in Google Cloud?",
+                answer: "Google Cloud offers: Standard (frequent access), Nearline (once per month), Coldline (once per quarter), and Archive (once per year). Each class is optimized for different access patterns and costs."
+            },
+            {
+                question: "What is a Storage Bucket?",
+                answer: "A bucket is a container for storing objects (files) in cloud storage. Buckets have globally unique names and are used to organize and control access to your data. This website is hosted in a bucket!"
+            },
+            {
+                question: "What are the benefits of Cloud Storage?",
+                answer: "Benefits include: scalability (grow as needed), durability (redundant copies), accessibility (access from anywhere), cost-effectiveness (pay for what you use), security (encryption and access controls), and disaster recovery."
+            },
+            {
+                question: "What is the difference between IaaS, PaaS, and SaaS?",
+                answer: "IaaS (Infrastructure) provides virtual machines and networking. PaaS (Platform) provides development frameworks and tools. SaaS (Software) provides ready-to-use applications. Storage as a Platform falls under PaaS/IaaS."
+            },
+            {
+                question: "How is data secured in Cloud Storage?",
+                answer: "Security measures include: encryption at rest and in transit, access control lists (ACLs), Identity and Access Management (IAM), signed URLs for temporary access, and compliance certifications (ISO, SOC, GDPR)."
+            },
+            {
+                question: "What is this demonstration proving?",
+                answer: "This flashcard website demonstrates Storage as a Platform by hosting a fully functional web application directly from Google Cloud Storage buckets. No traditional web server is needed - the storage itself serves as the platform for our application!"
+            }
+        ];
+
+        let currentIndex = 0;
+        let isFlipped = false;
+
+        function updateCard() {
+            const card = flashcards[currentIndex];
+            document.getElementById('question-text').textContent = card.question;
+            document.getElementById('answer-text').textContent = card.answer;
+            document.getElementById('current-card').textContent = currentIndex + 1;
+            document.getElementById('total-cards').textContent = flashcards.length;
+            
+            // Reset flip state
+            if (isFlipped) {
+                flipCard();
+            }
+        }
+
+        function flipCard() {
+            const flashcard = document.getElementById('flashcard');
+            flashcard.classList.toggle('flipped');
+            isFlipped = !isFlipped;
+        }
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % flashcards.length;
+            updateCard();
+        }
+
+        function previousCard() {
+            currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+            updateCard();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                nextCard();
+            } else if (event.key === 'ArrowLeft') {
+                previousCard();
+            } else if (event.key === ' ') {
+                event.preventDefault();
+                flipCard();
+            }
+        });
+
+        // Initialize
+        updateCard();
+    </script>
+</body>
+</html>
